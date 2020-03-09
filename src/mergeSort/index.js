@@ -1,35 +1,27 @@
 const { initList } = require('../utils')
 const list = initList(20)
-const list1 = initList(5)
-const list2 = initList(5)
 
-const merge = (left, right) => {
-    const total = left.length + right.length
+const merge = (list, p, q, r) => {
+    const left = list.slice(p, q)
+    const right = list.slice(q, r)
     left.push(Infinity)
     right.push(Infinity)
-    const temp = []
     let lIndex = 0
     let rIndex = 0
 
-    while (temp.length < total) {
-        if (left[lIndex] < right[rIndex]) {
-            temp.push(left[lIndex++])
-        } else {
-            temp.push(right[rIndex++])
-        }
+    while (p < r) {
+        list[p++] = left[lIndex] < right[rIndex] ? left[lIndex++] : right[rIndex++]
     }
-    return temp
 }
-const mergeSort = list => {
-    if (list.length === 1) return list
+const mergeSort = (list, p = 0, r = list.length) => {
+    if (r - p === 1) return
 
-    const middle = Math.floor(list.length / 2)
-    const left = mergeSort(list.slice(0, middle))
-    const right = mergeSort(list.slice(middle))
+    const q = Math.floor((r + p) / 2)
+    mergeSort(list, p, q)
+    mergeSort(list, q, r)
 
-    return merge(left, right)
+    merge(list, p, q, r)
 }
 console.log('origin', list)
-console.log(mergeSort(list))
-// console.log('newList', list)
-// console.log(merge(list1, list2))
+mergeSort(list)
+console.log('newList', list)
