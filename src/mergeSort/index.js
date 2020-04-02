@@ -1,5 +1,5 @@
 const { initList } = require('../utils')
-const list = initList(20)
+const list = initList(100000, 0, 100000)
 
 const merge = (list, p, q, r) => {
     const left = list.slice(p, q)
@@ -22,6 +22,8 @@ const mergeSort = (list, p = 0, r = list.length) => {
 
     merge(list, p, q, r)
 }
-console.log('origin', list)
+// console.log('origin', list)
+console.time('sort')
 mergeSort(list)
-console.log('newList', list)
+console.timeEnd('sort')
+// console.log('newList', list)
